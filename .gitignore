@@ -22,6 +22,9 @@ venv/
 .venv/
 env/
 
+# Claude Code skills（保留，讓 GitHub 同步）
+!.claude/
+
 # IDE
 .vscode/
 .idea/
