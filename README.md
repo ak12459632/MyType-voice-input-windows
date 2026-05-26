@@ -1,19 +1,21 @@
 # MyType Voice Input for Windows
 
-Windows 語音輸入工具——按快捷鍵開始錄音，放開後由 **Groq Whisper** 自動辨識成繁體中文，並貼入任何輸入框。
+Windows 語音輸入工具——按快捷鍵開始錄音，放開後由 **Groq Whisper** 自動辨識成**繁體中文與英文**，並貼入任何輸入框。
 
 ---
 
 ## 功能特色
 
 - 全域快捷鍵（預設 `Ctrl+Alt+Space`），在任何視窗皆可觸發
-- 錄音完畢後傳送至 Groq Whisper API，自動辨識繁體中文（台灣用語）
-- **設定視窗**（`Ctrl+Alt+S`）：GUI 介面管理所有設定，儲存後即時生效
-- **文字後處理**：可選啟用 Groq LLaMA，自動去除語氣詞、修正數字格式、補全標點
-- **個人詞庫**：自訂辨識後替換詞條（例：`skrf` → `scikit-rf`），儲存於 `lexicon.json`
-- **啟動時選擇錄音裝置**：從所有可用輸入裝置中選擇，上次設定自動預選
-- 右下角懸浮視窗即時預覽辨識結果
-- 倒數計時後自動貼入原輸入框，或手動按 Enter 確認 / Esc 取消
+- 錄音完畢後傳送至 Groq Whisper API，**自動偵測語言**：支援繁體中文（台灣用語）、英文，及中英混合輸入
+- **圓角深紫色懸浮視窗**：即時預覽辨識結果，倒數後自動貼入
+- **設定視窗**（`Ctrl+Alt+S`）：GUI 介面管理所有設定，4 個分頁，儲存後即時生效
+  - **API & 模型**：管理 Groq API Key、測試連線、選擇 Whisper 辨識模型
+  - **音訊 & 快捷鍵**：選擇錄音裝置、自訂錄音快捷鍵與設定視窗快捷鍵
+  - **文字後處理**：可選啟用 Groq LLaMA，自動去除語氣詞、修正數字格式、補全標點
+  - **個人詞庫**：自訂辨識後替換詞條（例：`skrf` → `scikit-rf`），儲存於 `lexicon.json`
+- **兩組快捷鍵均可自訂**：錄音快捷鍵與設定視窗快捷鍵皆可在 GUI 內錄製設定
+- 所有錄音裝置在設定視窗內管理，無需重啟程式
 
 ---
 
@@ -87,13 +89,10 @@ python mytype.py
 
 首次啟動時會自動彈出輸入框，貼入 API Key 後按確定，金鑰會自動儲存至 `config.json`。
 
-接著出現**錄音裝置選擇視窗**，選擇你的麥克風後按確定。
-
 啟動成功後終端機顯示：
 
 ```
-[MyType] 錄音裝置：麥克風 (Realtek HD Audio Mic input)
-[MyType] 就緒  快捷鍵：ctrl+alt+space　設定：Ctrl+Alt+S
+[MyType] 就緒  快捷鍵：ctrl+alt+space　設定：ctrl+alt+s
 [MyType] Ctrl+C 或關閉視窗結束程式
 ```
 
@@ -106,7 +105,7 @@ python mytype.py
 
 2. 按下 Ctrl + Alt + Space  →  右下角出現懸浮視窗，開始錄音
 
-3. 說出想輸入的內容
+3. 說出想輸入的內容（中文、英文或中英混合皆可）
 
 4. 再按一次 Ctrl + Alt + Space  →  停止錄音，傳送至 Groq 辨識
 
@@ -126,18 +125,28 @@ python mytype.py
 
 ## 設定視窗（Ctrl+Alt+S）
 
-按下 `Ctrl+Alt+S` 開啟設定視窗，包含三個分頁：
+按下 `Ctrl+Alt+S` 開啟設定視窗，包含四個分頁：
 
-### API 設定
+### 分頁一：API & 模型
 
 | 項目 | 說明 |
 |---|---|
 | Groq API Key | 顯示/隱藏、修改 API Key |
 | 測試連線 | 即時驗證 Key 是否可用 |
 | 辨識模型 | `whisper-large-v3-turbo`（預設）或 `whisper-large-v3` |
-| 快捷鍵 | 可自訂錄音快捷鍵（設定視窗本身固定為 `Ctrl+Alt+S`） |
+| 語言 | 自動偵測，支援繁體中文及英文混合輸入 |
 
-### 文字後處理
+### 分頁二：音訊 & 快捷鍵
+
+| 項目 | 說明 |
+|---|---|
+| 錄音裝置 | 從所有可用輸入裝置中選擇，儲存後立即生效 |
+| 錄音快捷鍵 | 自訂觸發錄音的全域快捷鍵（預設 `ctrl+alt+space`） |
+| 設定視窗快捷鍵 | 自訂開啟設定視窗的快捷鍵（預設 `ctrl+alt+s`） |
+
+> 快捷鍵可手動輸入，或點「錄製」後直接按下想要的組合鍵。
+
+### 分頁三：文字後處理
 
 啟用後，每次辨識結果會額外送至 Groq LLaMA 進行潤稿：
 
@@ -152,7 +161,7 @@ python mytype.py
 
 > 不啟用時仍會透過 Whisper Prompt 引導輸出繁體字，效果已相當不錯。
 
-### 個人詞庫
+### 分頁四：個人詞庫
 
 自訂辨識後的替換規則，每次貼上前自動套用：
 
@@ -176,13 +185,14 @@ python mytype.py
 {
   "groq_api_key": "gsk_...",
   "hotkey": "ctrl+alt+space",
+  "settings_hotkey": "ctrl+alt+s",
   "model": "whisper-large-v3-turbo",
   "sample_rate": 16000,
   "channels": 1,
   "device": 2,
   "auto_paste": true,
   "preview_seconds": 2.0,
-  "window_opacity": 0.92,
+  "window_opacity": 0.95,
   "post_process": false,
   "post_process_model": "llama-3.1-8b-instant"
 }
@@ -192,6 +202,7 @@ python mytype.py
 |---|---|
 | `groq_api_key` | Groq API Key |
 | `hotkey` | 錄音快捷鍵 |
+| `settings_hotkey` | 設定視窗快捷鍵 |
 | `model` | Whisper 辨識模型 |
 | `device` | 錄音裝置索引（`null` = 系統預設） |
 | `auto_paste` | `true` = 倒數後自動貼上；`false` = 等待手動確認 |
@@ -226,7 +237,7 @@ print(sd.query_devices())
 
 ### Q：辨識結果輸出簡體字？
 
-確認 `config.json` 中的模型為 `whisper-large-v3-turbo`，且程式已套用繁體中文 Prompt。若仍有問題，可啟用文字後處理讓 LLaMA 進行繁化。
+確認 `config.json` 中的模型為 `whisper-large-v3-turbo`。若仍有問題，可啟用文字後處理讓 LLaMA 進行繁化。
 
 ### Q：辨識到背景音而非我說的話？
 
@@ -234,7 +245,7 @@ print(sd.query_devices())
 
 - 使用耳麥（麥克風離嘴近）
 - 錄音時將背景影片/音樂靜音
-- 在設定中切換至指向性更強的麥克風
+- 在設定 → 音訊 & 快捷鍵 中切換至指向性更強的麥克風
 
 ### Q：如何讓程式開機自動啟動？
 
