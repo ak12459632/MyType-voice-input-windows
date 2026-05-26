@@ -1,0 +1,10 @@
+{
+  "api_key": "YOUR_GEMINI_API_KEY_HERE",
+  "hotkey": "ctrl+alt+space",
+  "model": "gemini-2.0-flash",
+  "sample_rate": 16000,
+  "channels": 1,
+  "auto_paste": true,
+  "preview_seconds": 2.0,
+  "window_opacity": 0.92
+}
