@@ -1,5 +1,6 @@
-# 設定檔含 API Key，不上傳
+# 設定檔含 API Key 與個人資料，不上傳
 config.json
+lexicon.json
 
 # Python
 __pycache__/

@@ -1,7 +1,7 @@
 {
-  "api_key": "YOUR_GEMINI_API_KEY_HERE",
+  "groq_api_key": "YOUR_GROQ_API_KEY_HERE",
   "hotkey": "ctrl+alt+space",
-  "model": "gemini-2.0-flash",
+  "model": "whisper-large-v3-turbo",
   "sample_rate": 16000,
   "channels": 1,
   "auto_paste": true,
